@@ -1,0 +1,984 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Wyatt Cup — Annual Golf Tournament</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500;600&display=swap');
+
+  :root {
+    --green-dark: #1a472a;
+    --green-mid: #2d6a4f;
+    --green-light: #40916c;
+    --gold: #c9a84c;
+    --gold-light: #e8d48b;
+    --cream: #faf8f0;
+    --white: #ffffff;
+    --text: #1a1a2e;
+    --text-light: #555;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    color: var(--text);
+    background: var(--cream);
+    line-height: 1.6;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+    background: rgba(26, 71, 42, 0.95);
+    backdrop-filter: blur(10px);
+    padding: 0 2rem;
+    transition: all 0.3s ease;
+  }
+
+  nav ul {
+    display: flex;
+    justify-content: center;
+    list-style: none;
+    gap: 2rem;
+    padding: 1rem 0;
+    flex-wrap: wrap;
+  }
+
+  nav a {
+    color: var(--gold-light);
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.9rem;
+    letter-spacing: 0.05em;
+    transition: color 0.3s;
+    white-space: nowrap;
+  }
+
+  nav a:hover { color: var(--white); }
+
+  nav .nav-logo {
+    font-family: 'Playfair Display', serif;
+    font-weight: 900;
+    font-size: 1.3rem;
+    color: var(--gold);
+    margin-right: auto;
+  }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    position: relative;
+    background:
+      linear-gradient(135deg, rgba(26,71,42,0.92) 0%, rgba(45,106,79,0.88) 50%, rgba(26,71,42,0.92) 100%),
+      url('https://images.unsplash.com/photo-1535131749006-b7f58c99034b?w=1920&q=80') center/cover no-repeat;
+    color: var(--white);
+    padding: 2rem;
+  }
+
+  .hero-content { max-width: 800px; }
+
+  .hero-badge {
+    display: inline-block;
+    background: var(--gold);
+    color: var(--green-dark);
+    padding: 0.4rem 1.2rem;
+    border-radius: 50px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+  }
+
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(3rem, 8vw, 6rem);
+    font-weight: 900;
+    line-height: 1.1;
+    margin-bottom: 1rem;
+    text-shadow: 0 2px 20px rgba(0,0,0,0.3);
+  }
+
+  .hero h1 span { color: var(--gold); }
+
+  .hero-tagline {
+    font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+    font-weight: 300;
+    margin-bottom: 0.5rem;
+    color: var(--gold-light);
+  }
+
+  .hero-year {
+    font-size: 1rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    margin-bottom: 2.5rem;
+    opacity: 0.8;
+  }
+
+  .btn {
+    display: inline-block;
+    padding: 1rem 2.5rem;
+    border-radius: 50px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    border: none;
+    font-size: 1rem;
+  }
+
+  .btn-primary {
+    background: var(--gold);
+    color: var(--green-dark);
+  }
+
+  .btn-primary:hover {
+    background: var(--gold-light);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(201,168,76,0.4);
+  }
+
+  .btn-outline {
+    background: transparent;
+    color: var(--white);
+    border: 2px solid var(--gold);
+    margin-left: 1rem;
+  }
+
+  .btn-outline:hover {
+    background: var(--gold);
+    color: var(--green-dark);
+  }
+
+  .hero-scroll {
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    color: var(--gold-light);
+    font-size: 0.8rem;
+    letter-spacing: 0.1em;
+    animation: bounce 2s infinite;
+  }
+
+  @keyframes bounce {
+    0%, 100% { transform: translateX(-50%) translateY(0); }
+    50% { transform: translateX(-50%) translateY(10px); }
+  }
+
+  /* SECTIONS */
+  section {
+    padding: 6rem 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .section-header {
+    text-align: center;
+    margin-bottom: 4rem;
+  }
+
+  .section-header h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 4vw, 3rem);
+    color: var(--green-dark);
+    margin-bottom: 1rem;
+  }
+
+  .section-header p {
+    color: var(--text-light);
+    max-width: 600px;
+    margin: 0 auto;
+    font-size: 1.1rem;
+  }
+
+  .section-header .divider {
+    width: 60px;
+    height: 3px;
+    background: var(--gold);
+    margin: 1.5rem auto;
+    border-radius: 2px;
+  }
+
+  /* ABOUT / TIMELINE */
+  #about { background: var(--white); margin: 0; max-width: none; padding: 6rem 2rem; }
+  #about .section-content { max-width: 1200px; margin: 0 auto; }
+
+  .timeline {
+    position: relative;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 3px;
+    height: 100%;
+    background: var(--green-light);
+    border-radius: 2px;
+  }
+
+  .timeline-item {
+    display: flex;
+    justify-content: flex-end;
+    padding-right: calc(50% + 2rem);
+    position: relative;
+    margin-bottom: 2.5rem;
+  }
+
+  .timeline-item:nth-child(even) {
+    justify-content: flex-start;
+    padding-right: 0;
+    padding-left: calc(50% + 2rem);
+  }
+
+  .timeline-dot {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 16px;
+    height: 16px;
+    background: var(--gold);
+    border-radius: 50%;
+    border: 3px solid var(--white);
+    box-shadow: 0 0 0 3px var(--green-light);
+    z-index: 1;
+  }
+
+  .timeline-card {
+    background: var(--cream);
+    padding: 1.5rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+    max-width: 350px;
+    transition: transform 0.3s;
+  }
+
+  .timeline-card:hover { transform: translateY(-3px); }
+
+  .timeline-year {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--green-dark);
+    margin-bottom: 0.3rem;
+  }
+
+  .timeline-card p {
+    color: var(--text-light);
+    font-size: 0.95rem;
+  }
+
+  /* TEAMS */
+  #teams { background: var(--cream); margin: 0; max-width: none; padding: 6rem 2rem; }
+  #teams .section-content { max-width: 1200px; margin: 0 auto; }
+
+  .teams-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .team-card {
+    background: var(--white);
+    border-radius: 20px;
+    padding: 3rem 2rem;
+    text-align: center;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+    transition: transform 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .team-card:hover { transform: translateY(-5px); }
+
+  .team-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 6px;
+  }
+
+  .team-town::before { background: linear-gradient(90deg, #2563eb, #3b82f6); }
+  .team-country::before { background: linear-gradient(90deg, #16a34a, #22c55e); }
+
+  .team-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+  }
+
+  .team-card h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .team-town h3 { color: #2563eb; }
+  .team-country h3 { color: #16a34a; }
+
+  .team-card .team-tagline {
+    color: var(--text-light);
+    font-style: italic;
+    margin-bottom: 1.5rem;
+  }
+
+  .team-stats {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid #eee;
+  }
+
+  .team-stat strong {
+    display: block;
+    font-size: 1.5rem;
+    color: var(--green-dark);
+  }
+
+  .team-stat span {
+    font-size: 0.8rem;
+    color: var(--text-light);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .vs-badge {
+    display: none;
+  }
+
+  /* PLAYERS */
+  #players { background: var(--white); margin: 0; max-width: none; padding: 6rem 2rem; }
+  #players .section-content { max-width: 1200px; margin: 0 auto; }
+
+  .players-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 2rem;
+  }
+
+  .player-card {
+    background: var(--cream);
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+
+  .player-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 30px rgba(0,0,0,0.12);
+  }
+
+  .player-photo {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+  }
+
+  .player-info { padding: 1.5rem; }
+
+  .player-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--green-dark);
+    margin-bottom: 0.2rem;
+  }
+
+  .player-team {
+    display: inline-block;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 0.2rem 0.6rem;
+    border-radius: 4px;
+    margin-bottom: 0.8rem;
+  }
+
+  .player-team.town { background: #dbeafe; color: #2563eb; }
+  .player-team.country { background: #dcfce7; color: #16a34a; }
+
+  .player-handicap {
+    font-size: 0.85rem;
+    color: var(--text-light);
+    margin-bottom: 0.5rem;
+  }
+
+  .player-handicap strong { color: var(--green-dark); }
+
+  .player-bio {
+    font-size: 0.85rem;
+    color: var(--text-light);
+    line-height: 1.5;
+  }
+
+  /* CAPTAINS 2026 */
+  #captains {
+    background: linear-gradient(135deg, var(--green-dark) 0%, var(--green-mid) 100%);
+    margin: 0;
+    max-width: none;
+    padding: 6rem 2rem;
+    color: var(--white);
+  }
+
+  #captains .section-content { max-width: 1200px; margin: 0 auto; }
+
+  #captains .section-header h2 { color: var(--gold); }
+  #captains .section-header p { color: rgba(255,255,255,0.8); }
+  #captains .section-header .divider { background: var(--gold); }
+
+  .captains-intro {
+    text-align: center;
+    max-width: 700px;
+    margin: 0 auto 3rem;
+    font-size: 1.1rem;
+    color: rgba(255,255,255,0.9);
+    line-height: 1.7;
+  }
+
+  .captains-intro .new-badge {
+    display: inline-block;
+    background: var(--gold);
+    color: var(--green-dark);
+    padding: 0.3rem 1rem;
+    border-radius: 50px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 1rem;
+  }
+
+  .captains-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .captain-card {
+    background: rgba(255,255,255,0.1);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    padding: 2.5rem;
+    text-align: center;
+    border: 1px solid rgba(255,255,255,0.15);
+    transition: transform 0.3s;
+  }
+
+  .captain-card:hover { transform: translateY(-5px); }
+
+  .captain-avatar {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 4px solid var(--gold);
+    margin-bottom: 1.5rem;
+  }
+
+  .captain-card h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    margin-bottom: 0.3rem;
+    color: var(--gold-light);
+  }
+
+  .captain-role {
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--gold);
+    margin-bottom: 0.5rem;
+  }
+
+  .captain-team-badge {
+    display: inline-block;
+    padding: 0.3rem 1rem;
+    border-radius: 50px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+  }
+
+  .captain-team-badge.town { background: #2563eb; color: white; }
+  .captain-team-badge.country { background: #16a34a; color: white; }
+
+  .captain-bio {
+    font-size: 0.9rem;
+    color: rgba(255,255,255,0.8);
+    line-height: 1.6;
+  }
+
+  /* GALLERY */
+  #gallery { background: var(--cream); margin: 0; max-width: none; padding: 6rem 2rem; }
+  #gallery .section-content { max-width: 1200px; margin: 0 auto; }
+
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .gallery-item {
+    position: relative;
+    border-radius: 12px;
+    overflow: hidden;
+    aspect-ratio: 4/3;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    transition: transform 0.3s;
+  }
+
+  .gallery-item:hover { transform: scale(1.03); }
+
+  .gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s;
+  }
+
+  .gallery-item:hover img { transform: scale(1.1); }
+
+  .gallery-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 1.5rem 1rem 1rem;
+    background: linear-gradient(transparent, rgba(0,0,0,0.7));
+    color: white;
+    font-size: 0.85rem;
+    font-weight: 500;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .gallery-item:hover .gallery-overlay { opacity: 1; }
+
+  /* FOOTER */
+  footer {
+    background: var(--green-dark);
+    color: rgba(255,255,255,0.7);
+    padding: 4rem 2rem 2rem;
+    text-align: center;
+  }
+
+  footer h3 {
+    font-family: 'Playfair Display', serif;
+    color: var(--gold);
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+  }
+
+  footer .social-links {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    margin: 1.5rem 0;
+  }
+
+  footer .social-links a {
+    color: var(--gold-light);
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: color 0.3s;
+  }
+
+  footer .social-links a:hover { color: var(--white); }
+
+  footer .copyright {
+    font-size: 0.8rem;
+    opacity: 0.6;
+    margin-top: 2rem;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(255,255,255,0.1);
+  }
+
+  /* ANIMATIONS */
+  .fade-in {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+
+  .fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    nav ul { gap: 1rem; }
+    nav .nav-logo { display: none; }
+
+    .hero { padding: 6rem 1.5rem 3rem; }
+
+    .btn-outline { margin-left: 0; margin-top: 1rem; }
+
+    .timeline::before { left: 20px; }
+    .timeline-item,
+    .timeline-item:nth-child(even) {
+      padding-left: 50px;
+      padding-right: 0;
+      justify-content: flex-start;
+    }
+    .timeline-dot { left: 20px; }
+    .timeline-card { max-width: 100%; }
+
+    .teams-grid { grid-template-columns: 1fr; gap: 2rem; }
+    .captains-grid { grid-template-columns: 1fr; gap: 2rem; }
+
+    section, #about, #teams, #players, #captains, #gallery {
+      padding: 4rem 1.5rem;
+    }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <ul>
+    <span class="nav-logo">The Wyatt Cup</span>
+    <li><a href="#about">History</a></li>
+    <li><a href="#teams">Teams</a></li>
+    <li><a href="#players">Players</a></li>
+    <li><a href="#captains">2026 Captains</a></li>
+    <li><a href="#gallery">Gallery</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-content">
+    <div class="hero-badge">Est. 2015</div>
+    <h1>The <span>Wyatt</span> Cup</h1>
+    <p class="hero-tagline">Annual Golf Tournament</p>
+    <p class="hero-year">Town vs Country — 2026</p>
+    <a href="#about" class="btn btn-primary">Discover the Cup</a>
+    <a href="#captains" class="btn btn-outline">2026 Captains</a>
+  </div>
+  <div class="hero-scroll">Scroll &#8595;</div>
+</div>
+
+<!-- ABOUT / HISTORY -->
+<section id="about">
+  <div class="section-content">
+    <div class="section-header">
+      <h2>Tournament History</h2>
+      <div class="divider"></div>
+      <p>A tradition of friendly rivalry, great golf, and lasting friendships since 2015.</p>
+    </div>
+    <div class="timeline">
+      <div class="timeline-item fade-in">
+        <div class="timeline-dot"></div>
+        <div class="timeline-card">
+          <div class="timeline-year">2015</div>
+          <p>The inaugural Wyatt Cup was held at Riverside Golf Club. Town edged out Country by 2 points in a thrilling debut.</p>
+        </div>
+      </div>
+      <div class="timeline-item fade-in">
+        <div class="timeline-dot"></div>
+        <div class="timeline-card">
+          <div class="timeline-year">2017</div>
+          <p>Country claimed their first victory at Pine Valley, with a dominant performance on the back nine sealing the win.</p>
+        </div>
+      </div>
+      <div class="timeline-item fade-in">
+        <div class="timeline-dot"></div>
+        <div class="timeline-card">
+          <div class="timeline-year">2019</div>
+          <p>The closest finish yet — a single point separated the teams at Lakeside Country Club. Town prevailed in a playoff hole.</p>
+        </div>
+      </div>
+      <div class="timeline-item fade-in">
+        <div class="timeline-dot"></div>
+        <div class="timeline-card">
+          <div class="timeline-year">2021</div>
+          <p>Post-pandemic return at The Oaks. Record turnout with 16 players. Country won convincingly by 5 points.</p>
+        </div>
+      </div>
+      <div class="timeline-item fade-in">
+        <div class="timeline-dot"></div>
+        <div class="timeline-card">
+          <div class="timeline-year">2023</div>
+          <p>Town's revenge at Harbour Town. A masterclass in match play saw them reclaim the Cup by 4 points.</p>
+        </div>
+      </div>
+      <div class="timeline-item fade-in">
+        <div class="timeline-dot"></div>
+        <div class="timeline-card">
+          <div class="timeline-year">2024</div>
+          <p>Country struck back at Sunset Ridge. The largest crowd yet witnessed a dramatic Sunday comeback.</p>
+        </div>
+      </div>
+      <div class="timeline-item fade-in">
+        <div class="timeline-dot"></div>
+        <div class="timeline-card">
+          <div class="timeline-year">2026</div>
+          <p>The 10th edition introduces non-playing captains for the first time. The rivalry continues at a brand new venue.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TEAMS -->
+<section id="teams">
+  <div class="section-content">
+    <div class="section-header">
+      <h2>Town vs Country</h2>
+      <div class="divider"></div>
+      <p>The heart of the Wyatt Cup — two teams, one trophy, endless bragging rights.</p>
+    </div>
+    <div class="teams-grid">
+      <div class="team-card team-town fade-in">
+        <div class="team-icon">&#127970;</div>
+        <h3>Town</h3>
+        <p class="team-tagline">"Precision &amp; Pride"</p>
+        <p>The Town team represents the city slickers — players who thrive on manicured fairways and tight lies. Known for their strategic approach and unshakable confidence.</p>
+        <div class="team-stats">
+          <div class="team-stat">
+            <strong>4</strong>
+            <span>Titles</span>
+          </div>
+          <div class="team-stat">
+            <strong>8</strong>
+            <span>Players</span>
+          </div>
+        </div>
+      </div>
+      <div class="team-card team-country fade-in">
+        <div class="team-icon">&#127965;</div>
+        <h3>Country</h3>
+        <p class="team-tagline">"Grit &amp; Grace"</p>
+        <p>The Country team brings the rural spirit — players shaped by windswept courses and rugged terrain. Famed for their resilience and never-say-die attitude.</p>
+        <div class="team-stats">
+          <div class="team-stat">
+            <strong>3</strong>
+            <span>Titles</span>
+          </div>
+          <div class="team-stat">
+            <strong>8</strong>
+            <span>Players</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PLAYERS -->
+<section id="players">
+  <div class="section-content">
+    <div class="section-header">
+      <h2>The Players</h2>
+      <div class="divider"></div>
+      <p>Meet the golfers who make the Wyatt Cup what it is.</p>
+    </div>
+    <div class="players-grid">
+      <div class="player-card fade-in">
+        <img class="player-photo" src="https://picsum.photos/seed/wyatt1/400/300" alt="James Mitchell">
+        <div class="player-info">
+          <div class="player-name">James Mitchell</div>
+          <span class="player-team town">Town</span>
+          <p class="player-handicap">Handicap: <strong>4.2</strong></p>
+          <p class="player-bio">The steady hand of Town's lineup. James has played in every Wyatt Cup since the inaugural event and brings unmatched course management.</p>
+        </div>
+      </div>
+      <div class="player-card fade-in">
+        <img class="player-photo" src="https://picsum.photos/seed/wyatt2/400/300" alt="Oliver Hughes">
+        <div class="player-info">
+          <div class="player-name">Oliver Hughes</div>
+          <span class="player-team town">Town</span>
+          <p class="player-handicap">Handicap: <strong>8.1</strong></p>
+          <p class="player-bio">A powerful off the tee, Oliver's aggressive style has won Town countless holes. Known for his clutch putting under pressure.</p>
+        </div>
+      </div>
+      <div class="player-card fade-in">
+        <img class="player-photo" src="https://picsum.photos/seed/wyatt3/400/300" alt="Daniel Park">
+        <div class="player-info">
+          <div class="player-name">Daniel Park</div>
+          <span class="player-team town">Town</span>
+          <p class="player-handicap">Handicap: <strong>12.4</strong></p>
+          <p class="player-bio">The rising star of the Town squad. Daniel joined in 2023 and has quickly become one of the most improved players in the field.</p>
+        </div>
+      </div>
+      <div class="player-card fade-in">
+        <img class="player-photo" src="https://picsum.photos/seed/wyatt4/400/300" alt="Marcus Webb">
+        <div class="player-info">
+          <div class="player-name">Marcus Webb</div>
+          <span class="player-team town">Town</span>
+          <p class="player-handicap">Handicap: <strong>15.0</strong></p>
+          <p class="player-bio">A veteran presence who brings experience and calm to the team. Marcus is the strategist who reads the room as well as he reads greens.</p>
+        </div>
+      </div>
+      <div class="player-card fade-in">
+        <img class="player-photo" src="https://picsum.photos/seed/wyatt5/400/300" alt="Charlie Dawson">
+        <div class="player-info">
+          <div class="player-name">Charlie Dawson</div>
+          <span class="player-team country">Country</span>
+          <p class="player-handicap">Handicap: <strong>5.8</strong></p>
+          <p class="player-bio">Country's talisman. Charlie's all-around game and competitive fire make him the player everyone wants on their side.</p>
+        </div>
+      </div>
+      <div class="player-card fade-in">
+        <img class="player-photo" src="https://picsum.photos/seed/wyatt6/400/300" alt="Ben Foster">
+        <div class="player-info">
+          <div class="player-name">Ben Foster</div>
+          <span class="player-team country">Country</span>
+          <p class="player-handicap">Handicap: <strong>9.3</strong></p>
+          <p class="player-bio">A fierce competitor with a silky short game. Ben's ability to scramble from anywhere has saved Country on numerous occasions.</p>
+        </div>
+      </div>
+      <div class="player-card fade-in">
+        <img class="player-photo" src="https://picsum.photos/seed/wyatt7/400/300" alt="Sam Robertson">
+        <div class="player-info">
+          <div class="player-name">Sam Robertson</div>
+          <span class="player-team country">Country</span>
+          <p class="player-handicap">Handicap: <strong>11.7</strong></p>
+          <p class="player-bio">The quiet assassin. Sam lets his clubs do the talking and has a knack for producing his best golf when it matters most.</p>
+        </div>
+      </div>
+      <div class="player-card fade-in">
+        <img class="player-photo" src="https://picsum.photos/seed/wyatt8/400/300" alt="Tom Gallagher">
+        <div class="player-info">
+          <div class="player-name">Tom Gallagher</div>
+          <span class="player-team country">Country</span>
+          <p class="player-handicap">Handicap: <strong>14.2</strong></p>
+          <p class="player-bio">A beloved member of the Country squad. Tom's enthusiasm and sportsmanship embody the spirit of the Wyatt Cup.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 2026 CAPTAINS -->
+<section id="captains">
+  <div class="section-content">
+    <div class="section-header">
+      <h2>Introducing Non-Playing Captains</h2>
+      <div class="divider"></div>
+      <p>A new chapter for the Wyatt Cup 2026.</p>
+    </div>
+    <div class="captains-intro fade-in">
+      <div class="new-badge">New for 2026</div>
+      <p>For the first time in Wyatt Cup history, each team will have a <strong>non-playing captain</strong>. These captains won't swing a club on the course — instead, they'll lead from the sidelines, making strategic decisions, motivating their teams, and adding a whole new dimension to the rivalry. Think of it as the Ryder Cup meets your local club championship.</p>
+    </div>
+    <div class="captains-grid">
+      <div class="captain-card fade-in">
+        <img class="captain-avatar" src="https://picsum.photos/seed/capt1/240/240" alt="Richard Townsend">
+        <h3>Richard Townsend</h3>
+        <div class="captain-role">Non-Playing Captain</div>
+        <span class="captain-team-badge town">Town</span>
+        <p class="captain-bio">A former county-level player and lifelong golf enthusiast, Richard brings tactical acumen and a calm demeanor. He's been involved with the Wyatt Cup since day one and knows every player's strengths and weaknesses.</p>
+      </div>
+      <div class="captain-card fade-in">
+        <img class="captain-avatar" src="https://picsum.photos/seed/capt2/240/240" alt="Angus McAllister">
+        <h3>Angus McAllister</h3>
+        <div class="captain-role">Non-Playing Captain</div>
+        <span class="captain-team-badge country">Country</span>
+        <p class="captain-bio">A charismatic leader with an infectious love of the game, Angus is known for his rousing team talks and clever pairings. His ability to read the momentum of a match is second to none.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section id="gallery">
+  <div class="section-content">
+    <div class="section-header">
+      <h2>Gallery</h2>
+      <div class="divider"></div>
+      <p>Memories from past Wyatt Cup tournaments.</p>
+    </div>
+    <div class="gallery-grid">
+      <div class="gallery-item fade-in">
+        <img src="https://picsum.photos/seed/golf1/600/450" alt="Tournament action">
+        <div class="gallery-overlay">2024 — The final putt at Sunset Ridge</div>
+      </div>
+      <div class="gallery-item fade-in">
+        <img src="https://picsum.photos/seed/golf2/600/450" alt="Team celebration">
+        <div class="gallery-overlay">2023 — Town celebrates victory</div>
+      </div>
+      <div class="gallery-item fade-in">
+        <img src="https://picsum.photos/seed/golf3/600/450" alt="Group photo">
+        <div class="gallery-overlay">2022 — All players at The Oaks</div>
+      </div>
+      <div class="gallery-item fade-in">
+        <img src="https://picsum.photos/seed/golf4/600/450" alt="Course scenery">
+        <div class="gallery-overlay">2021 — The 18th green at Pine Valley</div>
+      </div>
+      <div class="gallery-item fade-in">
+        <img src="https://picsum.photos/seed/golf5/600/450" alt="Trophy presentation">
+        <div class="gallery-overlay">2019 — The trophy ceremony</div>
+      </div>
+      <div class="gallery-item fade-in">
+        <img src="https://picsum.photos/seed/golf6/600/450" alt="Swing action">
+        <div class="gallery-overlay">2018 — A perfect drive down the fairway</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <h3>The Wyatt Cup</h3>
+  <p>Annual Golf Tournament — Town vs Country</p>
+  <div class="social-links">
+    <a href="#">Instagram</a>
+    <a href="#">Twitter / X</a>
+    <a href="#">Facebook</a>
+    <a href="mailto:info@wyattcup.com">Email</a>
+  </div>
+  <p class="copyright">&copy; 2026 The Wyatt Cup. All rights reserved.</p>
+</footer>
+
+<script>
+  // Fade-in on scroll
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+  // Nav background on scroll
+  window.addEventListener('scroll', () => {
+    const nav = document.querySelector('nav');
+    if (window.scrollY > 100) {
+      nav.style.boxShadow = '0 2px 20px rgba(0,0,0,0.3)';
+    } else {
+      nav.style.boxShadow = 'none';
+    }
+  });
+</script>
+</body>
+</html>
